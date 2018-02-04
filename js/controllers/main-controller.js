@@ -26,6 +26,7 @@ angular.module('lufiApp.controllers', [])
         });
         target.addEventListener("drop", function (event) {
             $scope.myFile = event.dataTransfer.files[0];
+            target.style.borderColor = "rgba(0, 157, 215, 0.5)";
             changeState();
         });
         $scope.getFile = function (files) {

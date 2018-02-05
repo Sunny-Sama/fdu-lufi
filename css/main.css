@@ -49,25 +49,18 @@
 }
 
 .browse {
-    background:#009dd7;
     border-radius: 5px;
     font-size:20px;
     color:#fff;
-    width:240px;
-    height:60px;
-    display:-ms-flexbox;
+    width:260px; !important;
+    height:70px;
     display:flex;
-    -ms-flex-pack:center;
     justify-content:center;
-    -ms-flex-align:center;
     align-items:center;
     cursor:pointer;
-    padding:0 10px;
     margin: 20px auto;
 }
-.browse:hover {
-    color: white;
-}
+
 input[type=file] {
     opacity:0;
     overflow:hidden;
@@ -75,7 +68,7 @@ input[type=file] {
     z-index:-1}
 
 input[type=file].has-focus+#browse,input[type=file]:focus+#browse{
-    background-color:#009dd7;
+    background-color:#01b7ee;
     outline:1px dotted #000;
     outline:5px auto -webkit-focus-ring-color
 }

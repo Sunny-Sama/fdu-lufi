@@ -16,38 +16,6 @@ angular.module('lufiApp.controllers', [])
 
         };
         $scope.myFile = null;
-
-        var target = $(".upload-window")[0];
-        target.addEventListener("dragenter", function () {
-            target.style.borderColor = "#009dd7";
-        });
-        target.addEventListener("dragleave", function () {
-            target.style.borderColor = "rgba(0, 157, 215, 0.5)";
-        });
-        target.addEventListener("drop", function (event) {
-            $scope.myFile = event.dataTransfer.files[0];
-            target.style.borderColor = "rgba(0, 157, 215, 0.5)";
-            changeState();
-        });
-        // $scope.getFile = function (files) {
-        //     $scope.myFile = files[0];
-        //     changeState();
-        // };
-
-        function changeState(){
-            if($scope.myFile != null){
-                $(".no-file")[0].style.display = "none";
-                $("#fileName")[0].innerHTML = $scope.myFile.name;
-                $("#fileType")[0].innerHTML = $scope.myFile.type;
-                $("#fileSize")[0].innerHTML = $scope.myFile.size + "字节";
-                $(".has-file")[0].style.display = "block";
-
-            }else{
-                $(".no-file")[0].style.display = "block";
-                $(".has-file")[0].style.display = "none";
-            }
-        }
-
         var md5File;
         //监听分块上传过程中的时间点
         WebUploader.Uploader.register({
@@ -145,6 +113,33 @@ angular.module('lufiApp.controllers', [])
             fileNumLimit: 1
         });
 
+        var target = $(".upload-window")[0];
+        target.addEventListener("dragenter", function () {
+            target.style.borderColor = "#009dd7";
+        });
+        target.addEventListener("dragleave", function () {
+            target.style.borderColor = "rgba(0, 157, 215, 0.5)";
+        });
+        target.addEventListener("drop", function (event) {
+            $scope.myFile = event.dataTransfer.files[0];
+            target.style.borderColor = "rgba(0, 157, 215, 0.5)";
+            changeState();
+        });
+
+        function changeState(){
+            if($scope.myFile != null){
+                $(".no-file")[0].style.display = "none";
+                $("#fileName")[0].innerHTML = $scope.myFile.name;
+                $("#fileType")[0].innerHTML = $scope.myFile.type;
+                $("#fileSize")[0].innerHTML = $scope.myFile.size + "字节";
+                $(".has-file")[0].style.display = "block";
+
+            }else{
+                $(".no-file")[0].style.display = "block";
+                $(".has-file")[0].style.display = "none";
+            }
+        }
+
         //上传添加参数
         uploader.on('uploadBeforeSend', function (obj, data, headers) {
             data.md5File = md5File;
@@ -152,17 +147,8 @@ angular.module('lufiApp.controllers', [])
 
         // 当有文件被添加进队列的时候
         uploader.on('fileQueued', function (file) {
-            // $("#picker").hide();//隐藏上传框
-            // $("#file-list").append('<div id="' + file.id + '" class="item">' +
-            //     '<h4 class="info">' + file.name + '</h4>' +
-            //     '<p class="state"></p>' +
-            //     '</div>');
             $scope.myFile = file;
-            $(".no-file")[0].style.display = "none";
-            $("#fileName")[0].innerHTML = file.name;
-            $("#fileType")[0].innerHTML = file.type;
-            $("#fileSize")[0].innerHTML = file.size + "字节";
-            $(".has-file")[0].style.display = "block";
+            changeState();
             $("#process").append('<div id="' + file.id + '" class="item"><p class="state"></p></div>');
         });
 
@@ -198,12 +184,9 @@ angular.module('lufiApp.controllers', [])
             obj.name = name;
             obj.id = id;
             uploader.options.formData = obj;
-            //  uploader.options.formData = { "name": name, "id": id, };
-            if (state === 'uploading') {
-                uploader.stop();
-            } else {
-                uploader.upload();
-            }
+            // uploader.options.formData = { "name": name, "id": id, };
+            uploader.upload();
+
         });
 
         // 取消上传

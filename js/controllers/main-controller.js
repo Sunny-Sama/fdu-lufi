@@ -89,10 +89,10 @@ angular.module('lufiApp.controllers', [])
                         dataType: "json",
                         success: function (response) {
                             if (response) {
-                                //$('#' + file.id).find('p.state').text('上传成功');
-                                //$('#' + file.id).find('.progress').fadeOut();
+                                $('#' + file.id).find('p.state').text('上传成功');
+                                $('#' + file.id).find('.progress').fadeOut();
                             } else {
-                                //$('#' + file.id).find('p.state').text('合并出错');
+                                $('#' + file.id).find('p.state').text('合并出错');
                                 deferred.reject();
                             }
                         }
@@ -167,10 +167,6 @@ angular.module('lufiApp.controllers', [])
             $percent.css('width', percentage * 100 + '%');
         });
 
-        uploader.on('uploadSuccess', function (file) {
-            $('#' + file.id).find('p.state').text('已上传');
-        });
-
         // 点击上传
         $('#btn-upload').bind('click', function () {
             if($scope.myFile == null) {
@@ -193,6 +189,7 @@ angular.module('lufiApp.controllers', [])
         $scope.cancelUpload = function(){
             uploader.removeFile($scope.myFile.id, true);
             $scope.myFile = null;
-            changeState();
+            //changeState();
+            location.reload();
         };
     });
